@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+smartmontools:
+  pkg: smartmontools
+  sendmail_pkg: sendmail
+  config: '/etc/smartd.conf'
+  boot_config: '/etc/default/smartmontools'
+  service:
+    name: smartmontools
+  email: root

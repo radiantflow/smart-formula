@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{## Start with  defaults from defaults.sls ##}
+{% import_yaml 'smartmontools/defaults.yaml' as default_settings %}
+
+{##
+Setup variable using grains['os_family'] based logic, only add key:values here
+that differ from whats in defaults.yaml
+##}
+{% set os_family_map = salt['grains.filter_by']({
+        'Debian': {},
+        'Suse': {},
+        'Arch': {
+            "pkg" : 'xx-arch',
+        },
+        'RedHat': {
+            "config": '/etc/smartd.conf',
+        },
+  }
+  , grain="os_family"
+  , merge=salt['pillar.get']('smartmontools:lookup'))
+%}
+{## Merge the flavor_map to the default settings ##}
+{% do default_settings.smartmontools.update(os_family_map) %}
+
+{## Merge in smartmontools:lookup pillar ##}
+{% set smartmontools_settings = salt['pillar.get'](
+        'smartmontools',
+        default=default_settings.smartmontools,
+        merge=True
+    )
+%}
+
+{## If no devices are specified in the pillar file, pick all devices which are available on the minion##}
+{% if smartmontools_settings.devices is not defined %}
+   {% set devices = salt['partition.get_block_device']() %}
+   {% do smartmontools_settings.update({'devices': devices}) %}
+{% endif %}
+

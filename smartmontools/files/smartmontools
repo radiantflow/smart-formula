@@ -1,0 +1,12 @@
+{%- from "smartmontools/map.jinja" import smartmontools_settings with context %}
+
+#
+# DO NOT EDIT
+#
+# This file is managed by salt via {{ source }}
+# Modify the config that generates this file instead
+#
+
+start_smartd=yes
+smartd_opts="--interval=1800"
+
