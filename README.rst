@@ -1,9 +1,8 @@
 ================
-template-formula
+smart-formula
 ================
 
-A saltstack formula that is empty. It has dummy content to help with a quick
-start on a new formula.
+SMART formula
 
 .. note::
 
@@ -16,7 +15,7 @@ Available states
 .. contents::
     :local:
 
-``template``
+``smartmontools``
 ------------
 
-Installs the template package, and starts the associated template service.
+Installs the smartmontools and a sendmail package, and starts the associated smartd service.
