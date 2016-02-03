@@ -32,7 +32,8 @@ that differ from whats in defaults.yaml
     )
 %}
 
-{## If no devices are specified in the pillar file, pick all devices which are available on the minion##}
+{## If no devices are specified in the pillar file, pick all devices which are available on the minion. ##}
+{## TODO: Use smartmontools:lookup table instead and merge with it. ##}
 {% if smartmontools_settings.devices is not defined %}
    {% set devices = salt['partition.get_block_device']() %}
    {% do smartmontools_settings.update({'devices': devices}) %}
