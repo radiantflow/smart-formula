@@ -1,3 +1,7 @@
-template:
-  lookup:
-    master: template-master
+smartmontools:
+  device_scan: true
+  email: root@example.com
+  # if devices are not defined, all disks will be monitored.
+  devices:
+    - 'sda'
+    - 'sdb'
