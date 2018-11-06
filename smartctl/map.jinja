@@ -2,7 +2,7 @@
 # vim: ft=jinja
 
 {## Start with  defaults from defaults.sls ##}
-{% import_yaml 'smartmontools/defaults.yaml' as default_settings %}
+{% import_yaml 'smartctl/defaults.yaml' as default_settings %}
 
 {##
 Setup variable using grains['os_family'] based logic, only add key:values here
@@ -19,18 +19,19 @@ that differ from whats in defaults.yaml
         },
   }
   , grain="os_family"
-  , merge=salt['pillar.get']('smartmontools:lookup'))
+  , merge=salt['pillar.get']('smartctl:lookup'))
 %}
 {## Merge the flavor_map to the default settings ##}
 {% do default_settings.smartctl.update(os_family_map) %}
 
-{## Merge in smartmontools:lookup pillar ##}
+{## Merge in smartctl:lookup pillar ##}
 {% set smartctl = salt['pillar.get'](
         'smartctl',
         default=default_settings.smartctl,
         merge=True
     )
 %}
+
 
 {## If no devices are specified in the pillar file, pick all devices which are available on the minion. ##}
 {## TODO: Use smartctl:lookup table instead and merge with it. ##}

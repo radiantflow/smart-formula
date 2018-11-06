@@ -4,7 +4,7 @@ smartctl:
   pkg: smartmontools
   sendmail_pkg: sendmail
   config: '/etc/smartd.conf'
-  boot_config: '/etc/default/smartmontools'
+  boot_config: '/etc/default/smartctl'
   device_scan: false
   service:
     name: smartmontools

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{% from "smartmontools/map.jinja" import smartctl with context %}
+{% from "smartctl/map.jinja" import smartctl with context %}
 
 smartctl-service:
   service.running:

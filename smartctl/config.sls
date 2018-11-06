@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{% from "smartmontools/map.jinja" import smartctl with context %}
+{% from "smartctl/map.jinja" import smartctl with context %}
 
 smartctl-boot-config:
   file.managed:
     - name: {{ smartctl.boot_config }}
-    - source: salt://smartmontools/files/smartmontools
+    - source: salt://smartctl/files/smartctl
     - mode: 644
     - user: root
     - group: root
@@ -17,7 +17,7 @@ smartctl-boot-config:
 smartctl-config:
   file.managed:
     - name: {{ smartctl.config }}
-    - source: salt://smartmontools/files/smartd.conf
+    - source: salt://smartctl/files/smartd.conf
     - mode: 644
     - user: root
     - group: root
