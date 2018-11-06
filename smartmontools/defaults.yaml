@@ -5,6 +5,20 @@ smartctl:
   sendmail_pkg: sendmail
   config: '/etc/smartd.conf'
   boot_config: '/etc/default/smartmontools'
+  device_scan: false
   service:
     name: smartmontools
+  #devices: []
   email: root
+
+  short_test:
+    month: '..'
+    dom: '..'
+    dow: '.'
+    hour: '3'
+
+  long_test:
+    month: '..'
+    dom: '..'
+    dow: '6'
+    hour: '4'
