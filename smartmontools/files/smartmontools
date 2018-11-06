@@ -1,5 +1,3 @@
-{%- from "smartmontools/map.jinja" import smartmontools_settings with context %}
-
 #
 # DO NOT EDIT
 #

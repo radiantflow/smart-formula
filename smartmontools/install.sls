@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{% from "smartmontools/map.jinja" import smartmontools_settings with context %}
+{% from "smartmontools/map.jinja" import smartctl with context %}
 
-smartmontools-pkg:
+smartctl-pkg:
   pkg.installed:
-    - name: {{ smartmontools_settings.pkg }}
+    - name: {{ smartctl.pkg }}
 
-sendmail-pkg:
+smartctl-sendmail-pkg:
   pkg.installed:
-    - name: {{ smartmontools_settings.sendmail_pkg }}
+    - name: {{ smartctl.sendmail_pkg }}
   

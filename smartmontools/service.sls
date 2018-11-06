@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{% from "smartmontools/map.jinja" import smartmontools_settings with context %}
+{% from "smartmontools/map.jinja" import smartctl with context %}
 
-smartmontools-service:
+smartctl-service:
   service.running:
-    - name: {{ smartmontools_settings.service.name }}
+    - name: {{ smartctl.service.name }}
     - enable: True
     - require:
-        - pkg: {{ smartmontools_settings.pkg }}
+        - pkg: {{ smartctl.pkg }}
     - watch:
-        - file: {{ smartmontools_settings.config }}
-        - file: {{ smartmontools_settings.boot_config }}
+        - file: {{ smartctl.config }}
+        - file: {{ smartctl.boot_config }}
 
-{% for device in smartmontools_settings.devices %}
+{% for device in smartctl.devices %}
 smartctl -s on /dev/{{ device }}:
   cmd.run:
     - onlyif: "smartctl -i /dev/{{ device }} | grep -q 'SMART support is: Disabled'"
     - require:
-      - pkg: {{ smartmontools_settings.pkg }}
+      - pkg: {{ smartctl.pkg }}
 {% endfor %}

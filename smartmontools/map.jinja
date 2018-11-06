@@ -22,20 +22,20 @@ that differ from whats in defaults.yaml
   , merge=salt['pillar.get']('smartmontools:lookup'))
 %}
 {## Merge the flavor_map to the default settings ##}
-{% do default_settings.smartmontools.update(os_family_map) %}
+{% do default_settings.smartctl.update(os_family_map) %}
 
 {## Merge in smartmontools:lookup pillar ##}
-{% set smartmontools_settings = salt['pillar.get'](
-        'smartmontools',
-        default=default_settings.smartmontools,
+{% set smartctl = salt['pillar.get'](
+        'smartctl',
+        default=default_settings.smartctl,
         merge=True
     )
 %}
 
 {## If no devices are specified in the pillar file, pick all devices which are available on the minion. ##}
-{## TODO: Use smartmontools:lookup table instead and merge with it. ##}
-{% if smartmontools_settings.devices is not defined %}
+{## TODO: Use smartctl:lookup table instead and merge with it. ##}
+{% if smartctl.devices is not defined %}
    {% set devices = salt['partition.get_block_device']() %}
-   {% do smartmontools_settings.update({'devices': devices}) %}
+   {% do smartctl.update({'devices': devices}) %}
 {% endif %}
 
