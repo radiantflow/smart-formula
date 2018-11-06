@@ -32,11 +32,61 @@ that differ from whats in defaults.yaml
     )
 %}
 
+{% if not smartctl.get('short_test_schedule') %}
+    {% do smartctl.update({'short_test_schedule': [
+        smartctl.short_test.month,
+        smartctl.short_test.dom,
+        smartctl.short_test.dow,
+        smartctl.short_test.hour
+    ] | join('/')}) %}
+{% endif %}
 
-{## If no devices are specified in the pillar file, pick all devices which are available on the minion. ##}
-{## TODO: Use smartctl:lookup table instead and merge with it. ##}
-{% if smartctl.devices is not defined %}
-   {% set devices = salt['partition.get_block_device']() %}
-   {% do smartctl.update({'devices': devices}) %}
+{% if not smartctl.get('long_test_schedule') %}
+    {% do smartctl.update({'long_test_schedule': [
+        smartctl.long_test.month,
+        smartctl.long_test.dom,
+        smartctl.long_test.dow,
+        smartctl.long_test.hour
+    ] | join('/')}) %}
+{% endif %}
+
+{% if smartctl.get('devices', []) | length == 0 %}
+   {% do smartctl.update({'device_scan': true}) %}
+{% else %}
+    {% set devices = [] %}
+    {% for device in smartctl.devices %}
+        {% if device is string %}
+            {% do devices.append({
+                'id': device,
+                'short_test_schedule' : smartctl.short_test_schedule,
+                'long_test_schedule' : smartctl.long_test_schedule
+            })%}
+        {% elif device is mapping %}
+            {% if not device.get('short_test_schedule') %}
+                {% set short_test = device.get("short_test", smartctl.short_test) %}
+                {% do device.update({'short_test_schedule': [
+                    short_test.month,
+                    short_test.dom,
+                    short_test.dow,
+                    short_test.hour
+                ] | join('/')}) %}
+            {% endif %}
+            {% if not device.get('long_test_schedule') %}
+                {% set long_test = device.get("long_test", smartctl.long_test) %}
+                {% do device.update({'long_test_schedule': [
+                    long_test.month,
+                    long_test.dom,
+                    long_test.dow,
+                    long_test.hour
+                ] | join('/')}) %}
+            {% endif %}
+            {% do devices.append({
+                'id': device.id,
+                'short_test_schedule' : device.short_test_schedule,
+                'long_test_schedule' : device.long_test_schedule
+            })%}
+        {% endif %}
+    {% endfor %}
+    {% do smartctl.update({'devices': devices}) %}
 {% endif %}
 

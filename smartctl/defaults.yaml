@@ -2,13 +2,12 @@
 # vim: ft=yaml
 smartctl:
   pkg: smartmontools
-  sendmail_pkg: sendmail
   config: '/etc/smartd.conf'
   boot_config: '/etc/default/smartctl'
   device_scan: false
   service:
     name: smartmontools
-  #devices: []
+  devices: []
   email: root
 
   short_test:

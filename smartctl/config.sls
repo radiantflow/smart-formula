@@ -12,7 +12,7 @@ smartctl-boot-config:
     - group: root
     - template: jinja
     - context:
-      smartctl: smartctl
+      smartctl: {{ smartctl }}
 
 smartctl-config:
   file.managed:
@@ -23,4 +23,4 @@ smartctl-config:
     - group: root
     - template: jinja
     - context:
-      smartctl: smartctl
+      smartctl: {{ smartctl }}

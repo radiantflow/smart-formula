@@ -6,8 +6,4 @@
 smartctl-pkg:
   pkg.installed:
     - name: {{ smartctl.pkg }}
-
-smartctl-sendmail-pkg:
-  pkg.installed:
-    - name: {{ smartctl.sendmail_pkg }}
   

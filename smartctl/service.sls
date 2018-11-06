@@ -14,9 +14,9 @@ smartctl-service:
         - file: {{ smartctl.boot_config }}
 
 {% for device in smartctl.devices %}
-smartctl -s on /dev/{{ device }}:
+smartctl -s on /dev/{{ device.id }}:
   cmd.run:
-    - onlyif: "smartctl -i /dev/{{ device }} | grep -q 'SMART support is: Disabled'"
+    - onlyif: "smartctl -i /dev/{{ device.id }} | grep -q 'SMART support is: Disabled'"
     - require:
       - pkg: {{ smartctl.pkg }}
 {% endfor %}
