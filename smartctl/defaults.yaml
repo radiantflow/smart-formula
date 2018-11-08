@@ -3,7 +3,7 @@
 smartctl:
   pkg: smartmontools
   config: '/etc/smartd.conf'
-  boot_config: '/etc/default/smartctl'
+  boot_config: '/etc/default/smartmontools'
   device_scan: false
   service:
     name: smartmontools
